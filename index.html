@@ -1,260 +1,522 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Jessica Plotkin</title>
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta charset="UTF-8">
-	
-	
-	<!-- Font -->
-	
-	<link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700%7CAllura" rel="stylesheet">
-	
-	<!-- Stylesheets -->
-	
-	<link href="common-css/bootstrap.css" rel="stylesheet">
-	
-	<link href="common-css/ionicons.css" rel="stylesheet">
-	
-	<link href="common-css/fluidbox.min.css" rel="stylesheet">
-	
-	<link href="01-cv-portfolio/css/styles.css" rel="stylesheet">
-	
-	<link href="01-cv-portfolio/css/responsive.css" rel="stylesheet">
-	
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>jessica plotkin — backend engineer</title>
+<meta name="description" content="Jessica Plotkin — Lead Backend Engineer, Mobile Security at Atlassian.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
+<style>
+/* ── the terminal IS the page: one committed palette, full bleed ─── */
+:root{
+  --t-bg:#0e1116;
+  --t-bg-glow:#131922;
+  --t-chrome:#161c24;
+  --t-rule:#1e2732;
+  --t-fg:#cdd6e3;
+  --t-dim:#66768a;
+  --t-teal:#7fd4c1;
+  --t-amber:#e3b341;
+  --t-violet:#a999f0;
+  --t-rose:#f07178;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+*{box-sizing:border-box}
+html{height:100%}
+body{
+  margin:0;
+  height:100dvh;
+  background:var(--t-bg);
+  color:var(--t-fg);
+  font-family:var(--sans);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+}
+
+.titlebar{
+  flex:0 0 auto;
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;
+  background:var(--t-chrome);
+  border-bottom:1px solid var(--t-rule);
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  color:var(--t-dim);
+}
+.lights{display:flex;gap:6px;flex:0 0 auto}
+.lights i{width:11px;height:11px;border-radius:50%;display:block}
+.lights i:nth-child(1){background:#e2695f}
+.lights i:nth-child(2){background:#dfb043}
+.lights i:nth-child(3){background:#61c454}
+.titlebar span{flex:1;text-align:center;letter-spacing:.01em;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.titlebar .spacer{flex:0 0 51px}
+
+.screen{
+  flex:1 1 auto;
+  font-family:var(--mono);
+  font-size:13.5px;line-height:1.65;
+  color:var(--t-fg);
+  padding:20px clamp(16px,4vw,40px) 28px;
+  overflow-y:auto;
+  background:
+    radial-gradient(100% 70% at 50% 0%,var(--t-bg-glow) 0%,var(--t-bg) 70%);
+  cursor:text;
+  -webkit-font-smoothing:antialiased;
+}
+.col{max-width:96ch;margin-inline:auto}
+.screen::-webkit-scrollbar{width:9px}
+.screen::-webkit-scrollbar-thumb{background:#222b36;border-radius:9px}
+.screen::-webkit-scrollbar-track{background:transparent}
+
+/* tmux-style statusline along the bottom edge */
+.statusbar{
+  flex:0 0 auto;
+  display:flex;align-items:stretch;
+  background:var(--t-chrome);
+  border-top:1px solid var(--t-rule);
+  font-family:var(--mono);font-size:12px;
+  overflow:hidden;
+}
+.statusbar .tag{
+  flex:0 0 auto;display:flex;align-items:center;
+  padding:0 12px;
+  background:var(--t-teal);color:#0e1116;font-weight:700;
+}
+.chips{
+  flex:1 1 auto;
+  display:flex;align-items:center;gap:4px;
+  padding:6px 10px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.chips::-webkit-scrollbar{display:none}
+.chip{
+  flex:0 0 auto;
+  font-family:var(--mono);font-size:12px;
+  color:var(--t-dim);background:transparent;
+  border:1px solid var(--t-rule);border-radius:4px;
+  padding:3px 9px;cursor:pointer;
+}
+.chip:hover{color:var(--t-teal);border-color:var(--t-teal)}
+.hint{
+  flex:0 0 auto;display:flex;align-items:center;
+  padding:0 14px;color:var(--t-dim);
+  border-left:1px solid var(--t-rule);
+  white-space:nowrap;
+}
+@media (max-width:640px){ .hint{display:none} }
+
+.ln{white-space:pre-wrap;word-break:break-word}
+.ln.blank{height:.8em}
+.dim{color:var(--t-dim)}
+.teal{color:var(--t-teal)}
+.amber{color:var(--t-amber)}
+.violet{color:var(--t-violet)}
+.rose{color:var(--t-rose)}
+.b{font-weight:700}
+
+/* key/value rows inside command output */
+.kv{display:grid;grid-template-columns:minmax(0,7.5em) 1fr;gap:0 1.2em}
+.kv dt{color:var(--t-dim)}
+.kv dd{margin:0;color:var(--t-fg)}
+@media (max-width:460px){
+  .kv{grid-template-columns:1fr;gap:0}
+  .kv dt{margin-top:.5em}
+  .kv dd{margin-bottom:0}
+}
+
+/* a role/entry block */
+.entry{margin:.15em 0 .9em;padding-left:.9em;border-left:2px solid #1e2732}
+.entry .hd{color:var(--t-fg);font-weight:700}
+.entry .mt{color:var(--t-dim)}
+
+.screen a{color:var(--t-teal);text-decoration:none;border-bottom:1px solid rgba(127,212,193,.35)}
+.screen a:hover{border-bottom-color:var(--t-teal)}
+.screen a:focus-visible,.chip:focus-visible{outline:2px solid var(--t-amber);outline-offset:2px;border-radius:2px}
+
+.prompt-user{color:var(--t-teal)}
+.prompt-path{color:var(--t-violet)}
+.prompt-sym{color:var(--t-dim)}
+
+.inputline{display:flex;flex-wrap:wrap;align-items:baseline;gap:0}
+#mirror{white-space:pre-wrap;word-break:break-word;color:var(--t-fg)}
+.caret{
+  display:inline-block;width:.6em;height:1.05em;
+  background:var(--t-teal);vertical-align:text-bottom;
+  translate:0 .15em;
+}
+.caret.blink{animation:blink 1.05s steps(1,end) infinite}
+.caret.off{opacity:.35;animation:none}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+#field{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:-9999px}
+
+.banner{color:var(--t-teal);line-height:1.15;font-size:clamp(9px,2.6vw,13px);display:block}
+
+@media (prefers-reduced-motion:reduce){
+  .caret.blink{animation:none}
+}
+</style>
 </head>
 <body>
-	
-	<section class="intro-section">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-1 col-lg-2"></div>
-				<div class="col-md-10 col-lg-8">
-					<div class="intro">
-						<div class="profile-img"><img src="images/profile-250x250.jpg" alt=""></div>
-						<h2><b>Jessica Plotkin</b></h2>
-						<h4 class="font-yellow">Computer Science Student</h4>
-						<ul class="information margin-tb-30">
-							<li><b>Email : </b>jplotkin@berkeley.edu</li>
-							<li><b>GitHub : </b>JessicaPlotkin</li>
-						</ul>
-						<ul class="social-icons">
-							<li><a href="https://api.whatsapp.com/send?phone=18185699766"><i class="ion-social-whatsapp"></i></a></li>
-							
-							<li><a href="https://github.com/JessicaPlotkin"><em class="ion-social-github"></em></a></li>
-							<li><a href=""><i class="ion-social-linkedin"></i></a></li>
-						</ul>
-					</div><!-- intro -->
-				</div><!-- col-sm-8 -->
-			</div><!-- row -->
-		</div><!-- container -->
-	</section><!-- intro-section -->
-	
-	<section class="about-section section">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="heading">
-						<h3><b>About me</b></h3>
-						<!--<h6 class="font-lite-black"><strong>I guess this sums it up</strong></h6>--
-						<!--Add Download CV button-->
-					</div>
-				</div><!-- col-sm-4 -->
-				<div class="col-sm-8">
-				  <p class="margin-b-50">Hello! My name is Jessica Plotkin and I am currently a junior at UC Berkeley studying Computer Science as a Regents’ and Chancellor’s Scholar. I have a passion for tackling challenging problems with the help of mathematics and computer science, algorithm design and optimization, CS community inclusivity, and getting kids excited about all things STEM!</p>
-				</div><!-- col-sm-8 -->
-			</div><!-- row -->
-		</div><!-- container -->
-	</section><!-- about-section -->
-		
-	<section class="education-section section">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="heading">
-					  <h3><strong>Education</strong></h3>
-					  <h6 class="font-lite-black"><b>ACADEMIC CAREER</b></h6>
-					</div>
-				</div><!-- col-sm-4 -->
-				<div class="col-sm-8">
-				  <div class="education-wrapper">
-					  <div class="education margin-b-50">
-					    <h4><strong>Bachelor of Arts, Computer Science</strong> (Class of 2022)</h4>
-					    <h5 class="font-yellow"><strong>University of California, Berkeley: College of Letters and Sciences</strong>					    </h5>
-					    <h6 class="font-lite-black margin-t-10">Regents’ and Chancellor’s Scholar (Top &lt;1% of applicants),  GPA: 3.7/4.0</h6>
-					    <h6 class="font-lite-black margin-t-10">Senior standing by units</h6>
-						  	<p class="margin-tb-30">COMPSCI 162: Operating Systems and System Programming (Fall 2020)</p>
-						  	<p class="margin-tb-30">COMPSCI 161: Computer Security (Fall 2020)</p>
-						  	<p class="margin-tb-30">COMPSCI 170: Efficient Algorithms and Intractable Problems (Spring 2020)</p>
-						  	<p class="margin-tb-30">COMPSCI 61C: Great Ideas of Computer Architecture -Machine Structures (Spring 2020)</p>
-						  	<p class="margin-tb-30">DATASCI 100: Principles &amp; Techniques of Data Science  (Fall 2019)</p>
-						  	<p class="margin-tb-30">COMPSCI 70: Discrete Mathematics and Probability Theory (Fall 2019)</p>
-							<p class="margin-tb-30">ELENG 16A &amp; 16B: Designing Information Devices and Systems I &amp; II (Spring &amp; Fall 2019)</p>
-							<p class="margin-tb-30">COMPSCI 61B: Data Structures (Spring 2019)</p>
-							<p class="margin-tb-30"> COMPSCI 61A: The Structure and Interpretation of Computer Programs (Fall 2018)</p>
-					</div><!-- education -->
-						
-						<div class="education margin-b-50">
-						  <h4><strong>High School Diploma</strong> (Class of 2018)</h4>
-						  <h5 class="font-yellow"><strong>Ulysses S. Grant High School </strong></h5>
-						  <h6 class="font-lite-black margin-t-10">Valedictorian (ranked 1/455), Weighted GPA: 4.6/4.0, Unweighted GPA: 4.0/4.0</h6>
-						</div><!-- education -->
-						
-					  <div class="education margin-b-50">
-						  <h5 class="font-yellow"><strong> Los Angeles Valley College </strong></h5>
-					    <h6 class="font-lite-black margin-t-10">Dual enrollment during High School</h6>						  	
-							<p class="margin-tb-30">MATH 267: Calculus with Analytic Geometry III (Fall 2017)</p>
-						  	<p class="margin-tb-30">MATH 270: Linear Algebra (Spring 2017)</p>
-						</div><!-- education -->
-					</div><!-- education-wrapper -->
-				</div><!-- col-sm-8 -->
-			</div><!-- row -->
-		</div><!-- container -->
-		
-	</section><!-- education-section -->
-	
-	
-	<section class="experience-section section">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="heading">
-					  <h3><strong>Experience</strong></h3>
-</div>
-				
-				
-				</div><!-- col-sm-4 -->
-				<div class="col-sm-8">
-					<div class="experience margin-b-50">
-					  <h4><strong>Amazon Prime Video</strong></h4>
-					  <h5 class="font-yellow"><strong>Software Development Engineer Internship</strong></h5>
-					  <h6 class="margin-t-10">Summer 2020</h6>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>Worked on the team responsible for Video Central’s Communication Manager and Support Website</li>
-							<li>Created a chatbot for the Support Website using Amazon Lex to address partner questions about the status of their title uploads (incudes video, audio, cover art, etc.) as the first step in the website’s complete redesign</li>
-							<li>Modified an established codebase to add API access to Elasticsearch data and pushed code into production</li>
-							<li>Created an AWS Lambada function which interprets chatbot input data and queries various services to return the customer data necessary for addressing user questions in a readable format</li>
-							<li>Wrote unit and integration tests using dependency injection to ensure the validity of each part of my code</li>
-						</ul>
-				  </div>  
-				
-					<div class="experience margin-b-50">
-					  <h4><strong>Great Minds Robotics</strong></h4>
-					  <h5 class="font-yellow"><strong>Teaching Internship</strong></h5>
-					  <h6 class="margin-t-10">Summer 2019</h6>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>Taught and designed curriculum for a camp on Processing (a flexible software sketchbook and a language for learning how to code within the context of the visual arts) </li>
-							<li>Worked with kids ages 8-16 of various skill levels</li>
-						</ul>
-				  </div><!-- experience -->
-					
-						<div class="experience margin-b-50">
-					  <h4><strong>Regents’ and Chancellor’s Scholars Association</strong></h4>
-					  <h5 class="font-yellow"><strong>Web Development Committee</strong></h5>
-					  <h6 class="margin-t-10">Fall 2018 - PRESENT</h6>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>Developing and improving the Regents’ and Chancellor’s Scholars Association website</li>
-							<li>Created stable marriage engine for matching committees and applying members</li>
-							<li>Worked on developing a system for scholars to easily view their event points, previously manually reported upon request</li>
-						</ul>
-				  </div><!-- experience -->
-					
-					<div class="experience margin-b-50">
-					  <h4><strong>FIRST Robotics Competition</strong></h4>
-					  <h5 class="font-yellow"><strong>Team 980 “Thunderbots” </strong></h5>
-					  <h6 class="margin-t-10">Summer 2016 - Spring 2018</h6>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>Implemented computer vision component which assisted in precisely approaching objects with reflective tape in areas where drivers could not easily manually drive the robot into necessary positions</li>
-							<li>Designed the programming portion of the curriculum for a free robotics summer camp. Taught 5th and 6th graders how to build and program Lego Mindstorms robots. Helped other instructors with teaching programming portions of the curriculum.</li>
-							<li><b>Awards: Chairman’s Award at 2018 Los Angeles Regional, Finalists at 2018 Los Angeles Regional, Entrepreneurship Award at 2017 Los Angeles Regional.</b></li>
-						</ul>
-				  </div><!-- experience -->
-			  </div><!-- col-sm-8 -->
-			</div><!-- row -->
-		</div><!-- container -->
-		
-	</section><!-- experience-section -->
-	
-	<section class="experience-section section">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-4">
-					<div class="heading">
-					  <h3><strong>Skills</strong></h3>
-</div>
-				
-				
-				</div><!-- col-sm-4 -->
-				<div class="col-sm-8">
-					<div class="experience margin-b-50">
-					  <h4><strong>Programming Languages (Proficient):</strong></h4>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>C#, Python, Java, SQL</li>
-						</ul>
-				  </div><!-- experience -->
-					
-					<div class="experience margin-b-50">
-					  <h4><strong>Programming Languages (Working Knowledge):</strong></h4>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>JavaScript, Typescript, Processing, C++, RISC-V, Scheme, C</li>
-						</ul>
-				  </div><!-- experience -->
-					
-					<div class="experience margin-b-50">
-					  <h4><strong>Technologies (Working Knowledge):</strong></h4>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>Git, HTML/CSS, LaTeX</li>
-						</ul>
-				  </div><!-- experience -->
-					
-					<div class="experience margin-b-50">
-					  <h4><strong>Natural Languages (Native):</strong></h4>
-						<p class="font-semi-white margin-tb-20"></p>
-						<ul class="list margin-b-30">
-							<li>English, Russian</li>
-						</ul>
-				  </div><!-- experience -->
-			  </div><!-- col-sm-8 -->
-			</div><!-- row -->
-		</div><!-- container -->
-		
-	</section><!-- skills-section -->	
-	
-	<footer>
-		<p class="copyright">
-			<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="ion-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-		</p>
 
+<header class="titlebar">
+  <div class="lights" aria-hidden="true"><i></i><i></i><i></i></div>
+  <span>jessica@plotkin — ~ — zsh</span>
+  <div class="spacer" aria-hidden="true"></div>
+</header>
 
-	</footer>
-	
-	
-	<!-- SCIPTS -->
-	<script src="common-js/jquery-3.2.1.min.js"></script>
-	
-	<script src="common-js/tether.min.js"></script>
-	
-	<script src="common-js/bootstrap.js"></script>
-	
-	<script src="common-js/isotope.pkgd.min.js"></script>
-	
-	<script src="common-js/jquery.waypoints.min.js"></script>
-	
-	<script src="common-js/progressbar.min.js"></script>
-	
-	<script src="common-js/jquery.fluidbox.min.js"></script>
-	
-	<script src="common-js/scripts.js"></script>
-	
+<main class="screen" id="screen" role="log" aria-live="polite" aria-label="Terminal output">
+  <div class="col">
+    <div id="out"></div>
+    <div class="inputline" id="inputline" hidden>
+      <span class="prompt-user b">jessica</span><span class="prompt-sym">@</span><span class="prompt-path">~</span><span class="prompt-sym">&nbsp;$&nbsp;</span><span id="mirror"></span><span class="caret blink" id="caret"></span>
+    </div>
+  </div>
+</main>
+
+<input id="field" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Terminal input">
+
+<footer class="statusbar">
+  <div class="tag" aria-hidden="true">~/jessica</div>
+  <nav class="chips" id="chips" aria-label="Command shortcuts"></nav>
+  <div class="hint">Tab completes · ↑ recalls</div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   CONTENT — edit this block to update the site. Nothing else needs
+   to change. Add a command by adding a key to COMMANDS at the bottom.
+   ═══════════════════════════════════════════════════════════════════ */
+const ME = {
+  name:     "Jessica Plotkin",
+  role:     "Lead Backend Engineer",
+  team:     "Mobile Security @ Atlassian",
+  location: "San Francisco Bay Area",
+  email:    "0906jessica@gmail.com",
+  eduEmail: "jplotkin@berkeley.edu",
+  github:   "https://github.com/JessicaPlotkin",
+  linkedin: "https://www.linkedin.com/in/jessicaplotkin",
+  resume:   "resume.pdf",
+  started:  "2022-08-01"          // used by `uptime`
+};
+
+const ABOUT = [
+  "Backend engineer on Atlassian's Mobile Security team. I work on the",
+  "services behind authentication, device trust, and the security posture",
+  "of Atlassian's mobile apps — distributed systems where the failure",
+  "modes matter more than the happy path.",
+  "",
+  "Berkeley CS and math before that. Still fond of a good algorithm."
+];
+
+const WORK = [
+  { org:"Atlassian", role:"Lead Backend Engineer", when:"2022 — present",
+    note:"Mobile Security. Previously Software Engineer II and Software Engineer I." },
+  { org:"Amazon Prime Video", role:"Software Development Engineer Intern", when:"Summer 2020",
+    note:"Video Central — partner support tooling and service APIs." }
+];
+
+const EDU = [
+  { org:"University of California, Berkeley", role:"B.A. Computer Science · B.A. Mathematics", when:"2018 — 2022",
+    note:"Regents' and Chancellor's Scholar." }
+];
+
+const SKILLS = [
+  ["languages",  "Python, Java, C#, SQL, TypeScript"],
+  ["areas",      "distributed backends, authn/authz, mobile security, API design"],
+  ["tooling",    "Git, AWS, CI/CD, LaTeX"],
+  ["spoken",     "English, Russian"]
+];
+/* ═══════════════════════ end of content ═════════════════════════════ */
+
+const BANNER = [
+"     ██╗██████╗",
+"     ██║██╔══██╗",
+"     ██║██████╔╝",
+"██   ██║██╔═══╝",
+"╚█████╔╝██║",
+" ╚════╝ ╚═╝"
+];
+
+const out = document.getElementById('out');
+const screen = document.getElementById('screen');
+const field = document.getElementById('field');
+const mirror = document.getElementById('mirror');
+const caret = document.getElementById('caret');
+const inputline = document.getElementById('inputline');
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function line(html, cls){
+  const d = document.createElement('div');
+  d.className = 'ln' + (cls ? ' ' + cls : '');
+  d.innerHTML = html;
+  out.appendChild(d);
+  return d;
+}
+const blank = () => line('', 'blank');
+const scroll = () => { screen.scrollTop = screen.scrollHeight; };
+
+function entry(e){
+  return '<div class="entry"><div class="hd">' + esc(e.role) +
+    '</div><div class="mt">' + esc(e.org) + ' · ' + esc(e.when) + '</div>' +
+    (e.note ? '<div class="dim">' + esc(e.note) + '</div>' : '') + '</div>';
+}
+const link = (href, text) =>
+  '<a href="' + href + '" target="_blank" rel="noopener">' + esc(text) + '</a>';
+
+/* ── commands ─────────────────────────────────────────────────────── */
+const COMMANDS = {
+  help(){
+    line('Available commands — type one, or click a chip below.');
+    blank();
+    const rows = [
+      ['about',     'who I am, in four lines'],
+      ['work',      'where I have worked'],
+      ['education', 'where I studied'],
+      ['skills',    'what I work with'],
+      ['resume',    'download the full CV (PDF)'],
+      ['contact',   'email, GitHub, LinkedIn'],
+      ['clear',     'wipe the screen']
+    ];
+    rows.forEach(([c,d]) =>
+      line('  <span class="teal b">' + c.padEnd(11,' ') + '</span><span class="dim">' + d + '</span>'));
+    blank();
+    line('<span class="dim">There are a few more. Poke around.</span>');
+  },
+
+  about(){
+    ABOUT.forEach(l => l ? line(esc(l)) : blank());
+  },
+
+  whoami(){
+    line('<dl class="kv">' +
+      '<dt>name</dt><dd class="b">' + esc(ME.name) + '</dd>' +
+      '<dt>role</dt><dd>' + esc(ME.role) + '</dd>' +
+      '<dt>team</dt><dd>' + esc(ME.team) + '</dd>' +
+      '<dt>where</dt><dd>' + esc(ME.location) + '</dd>' +
+      '</dl>');
+  },
+
+  work(){
+    WORK.forEach(e => line(entry(e)));
+    line('<span class="dim">Detail lives in the resume — type </span><span class="teal">resume</span><span class="dim">.</span>');
+  },
+
+  education(){ EDU.forEach(e => line(entry(e))); },
+
+  skills(){
+    line('<dl class="kv">' + SKILLS.map(([k,v]) =>
+      '<dt>' + esc(k) + '</dt><dd>' + esc(v) + '</dd>').join('') + '</dl>');
+  },
+
+  resume(){
+    line('<span class="amber">↓</span> ' +
+      '<a href="' + ME.resume + '" download>' + esc(ME.resume) + '</a>' +
+      ' <span class="dim">— the full version, one page.</span>');
+  },
+
+  contact(){
+    line('<dl class="kv">' +
+      '<dt>email</dt><dd>' + link('mailto:' + ME.email, ME.email) + '</dd>' +
+      '<dt>berkeley</dt><dd>' + link('mailto:' + ME.eduEmail, ME.eduEmail) + '</dd>' +
+      '<dt>github</dt><dd>' + link(ME.github, ME.github.replace(/^https?:\/\//,'')) + '</dd>' +
+      '<dt>linkedin</dt><dd>' + link(ME.linkedin, ME.linkedin.replace(/^https?:\/\//,'')) + '</dd>' +
+      '</dl>');
+  },
+
+  clear(){ out.innerHTML = ''; },
+
+  banner(){ printBanner(); },
+
+  ls(){
+    line('<span class="teal">about.txt</span>   <span class="teal">work.txt</span>   ' +
+         '<span class="teal">education.txt</span>   <span class="teal">skills.txt</span>   ' +
+         '<span class="amber">resume.pdf</span>   <span class="dim">.secrets</span>');
+  },
+
+  cat(arg){
+    if(!arg){ line('cat: missing operand', 'rose'); return; }
+    const f = arg.replace(/\.(txt|pdf)$/,'');
+    if(f === '.secrets' || arg === '.secrets'){
+      line('cat: .secrets: Permission denied', 'rose'); return;
+    }
+    if(f === 'resume'){ COMMANDS.resume(); return; }
+    const map = {about:'about', work:'work', education:'education', skills:'skills'};
+    if(map[f]){ COMMANDS[map[f]](); return; }
+    line('cat: ' + esc(arg) + ': No such file or directory', 'rose');
+  },
+
+  uptime(){
+    const days = Math.floor((Date.now() - new Date(ME.started)) / 864e5);
+    const yrs = (days/365.25).toFixed(1);
+    line('shipping backend code for <span class="amber">' + yrs +
+         '</span> years <span class="dim">(' + days.toLocaleString() + ' days, load average: manageable)</span>');
+  },
+
+  date(){ line(new Date().toString()); },
+
+  sudo(arg){
+    line('jessica is not in the sudoers file. This incident has been reported.', 'rose');
+    if(arg) line('<span class="dim">(nice try, though.)</span>');
+  },
+
+  exit(){
+    line('<span class="dim">There is no exit. Try </span><span class="teal">contact</span><span class="dim"> instead.</span>');
+  }
+};
+
+const ALIASES = {
+  '?':'help', 'man':'help', 'experience':'work', 'jobs':'work', 'cv':'resume',
+  'school':'education', 'edu':'education', 'email':'contact', 'links':'contact',
+  'github':'contact', 'linkedin':'contact', 'me':'whoami', 'cls':'clear',
+  'quit':'exit', 'logout':'exit'
+};
+
+const VISIBLE = ['about','work','education','skills','resume','contact','help','clear'];
+const COMPLETIONS = [...new Set([...Object.keys(COMMANDS), ...Object.keys(ALIASES)])].sort();
+
+/* ── rendering the prompt / running commands ──────────────────────── */
+function promptLine(cmd){
+  line('<span class="prompt-user b">jessica</span><span class="prompt-sym">@</span>' +
+       '<span class="prompt-path">~</span><span class="prompt-sym"> $ </span>' +
+       '<span>' + esc(cmd) + '</span>');
+}
+
+function run(raw){
+  const input = raw.trim();
+  promptLine(input);
+  if(!input){ blank(); return; }
+  const [head, ...rest] = input.split(/\s+/);
+  const key = head.toLowerCase();
+  const name = COMMANDS[key] ? key : ALIASES[key];
+  if(name && COMMANDS[name]){
+    blank();
+    COMMANDS[name](rest.join(' '));
+  } else {
+    blank();
+    line('zsh: command not found: ' + esc(head), 'rose');
+    line('<span class="dim">type </span><span class="teal">help</span><span class="dim"> for the list.</span>');
+  }
+  blank();
+}
+
+function printBanner(){
+  const b = document.createElement('div');
+  b.className = 'ln banner';
+  b.textContent = BANNER.join('\n');
+  out.appendChild(b);
+  blank();
+  line('<span class="b">' + esc(ME.name) + '</span> · <span class="dim">' + esc(ME.role) + ', ' + esc(ME.team) + '</span>');
+}
+
+/* ── input handling ───────────────────────────────────────────────── */
+let buffer = '', history = [], hIndex = -1, ready = false;
+
+function syncMirror(){
+  mirror.textContent = buffer;
+  scroll();
+}
+
+function focusField(){ field.focus({preventScroll:true}); }
+
+document.addEventListener('mousedown', e => {
+  if(e.target.closest('a') || e.target.closest('.chip')) return;
+  if(window.getSelection().toString()) return;
+  focusField();
+});
+field.addEventListener('focus', () => caret.classList.remove('off'));
+field.addEventListener('blur',  () => caret.classList.add('off'));
+
+field.addEventListener('input', () => { buffer = field.value; syncMirror(); });
+
+field.addEventListener('keydown', e => {
+  if(!ready) return;
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    const cmd = buffer;
+    if(cmd.trim()){ history.push(cmd); }
+    hIndex = history.length;
+    buffer = ''; field.value = ''; syncMirror();
+    run(cmd);
+    scroll();
+  } else if(e.key === 'Tab'){
+    e.preventDefault();
+    const stem = buffer.trim().toLowerCase();
+    if(!stem) return;
+    const hits = COMPLETIONS.filter(c => c.startsWith(stem));
+    if(hits.length === 1){
+      buffer = hits[0] + ' '; field.value = buffer; syncMirror();
+    } else if(hits.length > 1){
+      promptLine(buffer);
+      line(hits.map(h => '<span class="teal">' + h + '</span>').join('   '));
+      blank();
+      scroll();
+    }
+  } else if(e.key === 'ArrowUp'){
+    e.preventDefault();
+    if(hIndex > 0){ hIndex--; buffer = history[hIndex]; field.value = buffer; syncMirror(); }
+  } else if(e.key === 'ArrowDown'){
+    e.preventDefault();
+    if(hIndex < history.length - 1){ hIndex++; buffer = history[hIndex]; }
+    else { hIndex = history.length; buffer = ''; }
+    field.value = buffer; syncMirror();
+  } else if(e.key === 'l' && (e.ctrlKey || e.metaKey)){
+    e.preventDefault(); COMMANDS.clear();
+  } else if(e.key === 'c' && e.ctrlKey){
+    e.preventDefault();
+    promptLine(buffer + '^C');
+    buffer = ''; field.value = ''; syncMirror();
+  }
+});
+
+/* ── chips ────────────────────────────────────────────────────────── */
+const chips = document.getElementById('chips');
+VISIBLE.forEach(c => {
+  const b = document.createElement('button');
+  b.className = 'chip'; b.type = 'button'; b.textContent = c;
+  b.addEventListener('click', () => {
+    if(!ready) return;
+    buffer = ''; field.value = ''; syncMirror();
+    run(c); scroll(); focusField();
+  });
+  chips.appendChild(b);
+});
+
+/* ── boot ─────────────────────────────────────────────────────────── */
+const BOOT = [
+  ['<span class="dim">Last login: ' + new Date().toDateString() + ' on ttys001</span>', 260],
+  ['<span class="dim">$ ./welcome.sh</span>', 420]
+];
+
+function finishBoot(){
+  printBanner();
+  blank();
+  line('<span class="dim">Type </span><span class="teal b">help</span><span class="dim"> to see what is here.</span>');
+  blank();
+  inputline.hidden = false;
+  ready = true;
+  focusField();
+  scroll();
+}
+
+if(reduce){
+  BOOT.forEach(([html]) => line(html));
+  finishBoot();
+} else {
+  let i = 0;
+  (function step(){
+    if(i >= BOOT.length){ setTimeout(finishBoot, 200); return; }
+    const [html, wait] = BOOT[i++];
+    line(html); scroll();
+    setTimeout(step, wait);
+  })();
+}
+</script>
 </body>
 </html>
