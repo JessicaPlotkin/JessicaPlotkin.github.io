@@ -242,6 +242,14 @@ const BANNER = [
 " ╚════╝ ╚═╝"
 ];
 
+const FORTUNES = [
+  "There are only two hard problems in distributed systems: exactly-once delivery, and off-by-one errors.",
+  "It's not a bug, it's an undocumented feature.",
+  "99 little bugs in the code. Take one down, patch it around — 127 little bugs in the code.",
+  "A backend engineer's favorite exception is NullPointerException — familiar, comforting, always there.",
+  "The tests passed, the build's green, and none of that means it works in prod."
+];
+
 const out = document.getElementById('out');
 const screen = document.getElementById('screen');
 const field = document.getElementById('field');
@@ -360,12 +368,66 @@ const COMMANDS = {
   date(){ line(new Date().toString()); },
 
   sudo(arg){
-    line('jessica is not in the sudoers file. This incident has been reported.', 'rose');
+    line('you are not in the sudoers file. This incident has been reported.', 'rose');
     if(arg) line('<span class="dim">(nice try, though.)</span>');
   },
 
   exit(){
     line('<span class="dim">There is no exit. Try </span><span class="teal">contact</span><span class="dim"> instead.</span>');
+  },
+
+  rm(arg){
+    const a = (arg || '').trim();
+    if(/^-rf\s+\/?$/.test(a)){
+      line("rm: cannot remove '/': this terminal has read-only feelings.", 'rose');
+      return;
+    }
+    if(a.replace(/^\.\//,'') === 'resume.pdf'){
+      line('rm: resume.pdf: Operation not permitted (I still need that one).', 'rose');
+      return;
+    }
+    line(a ? 'rm: ' + esc(a) + ': Permission denied' : 'rm: missing operand', 'rose');
+  },
+
+  su(){
+    line("su: Authentication failure. This isn't a democracy.", 'rose');
+  },
+
+  vim(){
+    line('vim: not installed. Also, how would you even exit this?', 'rose');
+  },
+
+  emacs(){
+    line("emacs: not installed. Neither is your left pinky's will to live.", 'rose');
+  },
+
+  ping(arg){
+    line((arg ? esc(arg) + ': ' : '') + 'pong');
+  },
+
+  hack(){
+    line('Nice try — this site’s entire attack surface is one <span class="teal">&lt;button&gt;</span>.', 'rose');
+  },
+
+  nmap(){
+    line('nmap: 1 open port found: <span class="amber">your curiosity</span>.');
+  },
+
+  fortune(){
+    line(esc(FORTUNES[Math.floor(Math.random() * FORTUNES.length)]));
+  },
+
+  git(arg){
+    const sub = (arg || '').trim().split(/\s+/)[0];
+    if(sub === 'blame'){ line("it's always DNS.", 'rose'); return; }
+    if(!sub){ line('usage: git &lt;command&gt; [args]', 'dim'); return; }
+    line('git: \'' + esc(sub) + '\' is not a git command. See <span class="teal">help</span>.', 'rose');
+  },
+
+  history(){
+    const past = history.slice(0, -1);
+    if(!past.length){ line('<span class="dim">no history yet — type a few commands first.</span>'); return; }
+    past.forEach((h, i) => line('<span class="dim">' + String(i + 1).padStart(3, ' ') + '</span>  ' + esc(h)));
   }
 };
 
@@ -373,7 +435,7 @@ const ALIASES = {
   '?':'help', 'man':'help', 'experience':'work', 'jobs':'work', 'cv':'resume',
   'school':'education', 'edu':'education', 'email':'contact', 'links':'contact',
   'github':'contact', 'linkedin':'contact', 'me':'whoami', 'cls':'clear',
-  'quit':'exit', 'logout':'exit'
+  'quit':'exit', 'logout':'exit', 'exploit':'hack'
 };
 
 const VISIBLE = ['about','work','education','skills','resume','contact','help','clear'];
