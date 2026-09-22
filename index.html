@@ -250,6 +250,22 @@ const FORTUNES = [
   "The tests passed, the build's green, and none of that means it works in prod."
 ];
 
+const XKCD = [
+  [149,  'Sandwich'],
+  [221,  'Random Number'],
+  [303,  'Compiling'],
+  [327,  'Exploits of a Mom'],
+  [386,  'Duty Calls'],
+  [927,  'Standards'],
+  [936,  'Password Strength'],
+  [1053, 'Ten Thousand'],
+  [1205, 'Is It Worth the Time?'],
+  [1319, 'Automation'],
+  [1425, 'Tasks'],
+  [1737, 'Datacenter Scale'],
+  [2347, 'Dependency']
+];
+
 const out = document.getElementById('out');
 const screen = document.getElementById('screen');
 const field = document.getElementById('field');
@@ -440,6 +456,11 @@ const COMMANDS = {
     const past = history.slice(0, -1);
     if(!past.length){ line('<span class="dim">no history yet — type a few commands first.</span>'); return; }
     past.forEach((h, i) => line('<span class="dim">' + String(i + 1).padStart(3, ' ') + '</span>  ' + esc(h)));
+  },
+
+  xkcd(){
+    const [n, title] = XKCD[Math.floor(Math.random() * XKCD.length)];
+    line('<span class="amber">#' + n + '</span>  ' + link('https://xkcd.com/' + n + '/', title));
   }
 };
 
@@ -447,7 +468,7 @@ const ALIASES = {
   '?':'help', 'man':'help', 'experience':'work', 'jobs':'work', 'cv':'resume',
   'school':'education', 'edu':'education', 'email':'contact', 'links':'contact',
   'github':'contact', 'linkedin':'contact', 'me':'whoami', 'cls':'clear',
-  'quit':'exit', 'logout':'exit', 'exploit':'hack'
+  'quit':'exit', 'logout':'exit', 'exploit':'hack', 'comic':'xkcd'
 };
 
 const VISIBLE = ['about','work','education','skills','resume','contact','help','clear'];
