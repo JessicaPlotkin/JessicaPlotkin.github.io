@@ -368,8 +368,20 @@ const COMMANDS = {
   date(){ line(new Date().toString()); },
 
   sudo(arg){
+    if((arg || '').trim().toLowerCase().replace(/\.$/,'') === 'make me a sandwich'){
+      line('Okay.', 'teal');
+      return;
+    }
     line('you are not in the sudoers file. This incident has been reported.', 'rose');
     if(arg) line('<span class="dim">(nice try, though.)</span>');
+  },
+
+  make(arg){
+    if((arg || '').trim().toLowerCase().replace(/\.$/,'') === 'me a sandwich'){
+      line('What? Make it yourself.', 'rose');
+      return;
+    }
+    line('make: *** No rule to make target ' + (arg ? "'" + esc(arg) + "'" : '') + '.  Stop.', 'rose');
   },
 
   exit(){
