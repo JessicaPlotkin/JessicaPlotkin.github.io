@@ -174,7 +174,7 @@ body{
   <div class="col">
     <div id="out"></div>
     <div class="inputline" id="inputline" hidden>
-      <span class="prompt-user b">jessica</span><span class="prompt-sym">@</span><span class="prompt-path">~</span><span class="prompt-sym">&nbsp;$&nbsp;</span><span id="mirror"></span><span class="caret blink" id="caret"></span>
+      <span class="prompt-user b">jplotkin</span><span class="prompt-sym">@</span><span class="prompt-path">~</span><span class="prompt-sym">&nbsp;$&nbsp;</span><span id="mirror"></span><span class="caret blink" id="caret"></span>
     </div>
   </div>
 </main>
@@ -381,7 +381,7 @@ const COMPLETIONS = [...new Set([...Object.keys(COMMANDS), ...Object.keys(ALIASE
 
 /* ── rendering the prompt / running commands ──────────────────────── */
 function promptLine(cmd){
-  line('<span class="prompt-user b">jessica</span><span class="prompt-sym">@</span>' +
+  line('<span class="prompt-user b">jplotkin</span><span class="prompt-sym">@</span>' +
        '<span class="prompt-path">~</span><span class="prompt-sym"> $ </span>' +
        '<span>' + esc(cmd) + '</span>');
 }
