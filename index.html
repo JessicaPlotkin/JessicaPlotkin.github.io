@@ -488,7 +488,7 @@ function focusField(){ field.focus({preventScroll:true}); }
 document.addEventListener('mouseup', e => {
   if(e.target.closest('a') || e.target.closest('.chip')) return;
   if(window.getSelection().toString()) return;
-  focusField();
+  setTimeout(focusField, 0);
 });
 field.addEventListener('focus', () => caret.classList.remove('off'));
 field.addEventListener('blur',  () => caret.classList.add('off'));
