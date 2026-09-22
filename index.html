@@ -485,7 +485,7 @@ function syncMirror(){
 
 function focusField(){ field.focus({preventScroll:true}); }
 
-document.addEventListener('mousedown', e => {
+document.addEventListener('mouseup', e => {
   if(e.target.closest('a') || e.target.closest('.chip')) return;
   if(window.getSelection().toString()) return;
   focusField();
