@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>jessica plotkin — backend engineer</title>
 <meta name="description" content="Jessica Plotkin — Lead Backend Engineer, Mobile Security at Atlassian.">
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="%230e1116"/><text x="32" y="43" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="28" font-weight="700" fill="%237fd4c1" text-anchor="middle">&gt;_</text></svg>'>
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jessicaplotkin.github.io/">
+<meta property="og:title" content="jessica plotkin — backend engineer">
+<meta property="og:description" content="Lead Backend Engineer, Mobile Security at Atlassian. An interactive terminal-style personal site.">
+<meta property="og:image" content="https://jessicaplotkin.github.io/og-image.png">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="420">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="jessica plotkin — backend engineer">
+<meta name="twitter:description" content="Lead Backend Engineer, Mobile Security at Atlassian. An interactive terminal-style personal site.">
+<meta name="twitter:image" content="https://jessicaplotkin.github.io/og-image.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;700&display=swap">
@@ -509,7 +521,18 @@ function printBanner(){
 }
 
 /* ── input handling ───────────────────────────────────────────────── */
-let buffer = '', history = [], hIndex = -1, ready = false;
+const HISTORY_KEY = 'jp-terminal-history';
+function loadHistory(){
+  try {
+    const arr = JSON.parse(localStorage.getItem(HISTORY_KEY) || '[]');
+    return Array.isArray(arr) ? arr.filter(x => typeof x === 'string').slice(-200) : [];
+  } catch(e){ return []; }
+}
+function saveHistory(){
+  try { localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(-200))); } catch(e){}
+}
+
+let buffer = '', history = loadHistory(), hIndex = history.length, ready = false;
 
 function syncMirror(){
   mirror.textContent = buffer;
@@ -533,7 +556,7 @@ field.addEventListener('keydown', e => {
   if(e.key === 'Enter'){
     e.preventDefault();
     const cmd = buffer;
-    if(cmd.trim()){ history.push(cmd); }
+    if(cmd.trim()){ history.push(cmd); saveHistory(); }
     hIndex = history.length;
     buffer = ''; field.value = ''; syncMirror();
     run(cmd);
